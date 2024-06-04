@@ -22,13 +22,6 @@ function onStart() {
     const juegos = document.querySelector('input[name="juegos"]:checked').value;
     let minJuegos = Math.ceil(juegos / 2);
 
-    // Iniciamos el simulacro
-    // iterar por la cantidad de juegos hasta que uno gane
-    // ganador => 0,1,2
-    // 0 => nadie ha ganado
-    // 1 => gano 1
-    // 2 => gano 2
-
     let jugador1Gana = 0;
     let jugador2Gana = 0;
 
@@ -54,7 +47,7 @@ function onStart() {
         ganadorTotal = 2;
     }
 
-    //todo String interpolation ?
+    //todo probando String interpolation ?
 
     document.getElementById("ganadorTotal").innerHTML =
         `Felicidades ${ganadorTotal}` + " ganaste!";
