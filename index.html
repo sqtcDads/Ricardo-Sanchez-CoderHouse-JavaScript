@@ -8,33 +8,13 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
-    <title>4 en linea</title>
-    <script src="./index.js"></script>
+    <title>Tic Tac Toe</title>
+    <script src="./script.js"></script>
   </head>
   <body>
     <h1>Proyecto para Coder de JS</h1>
 
-    <div class="forms">
-      <div class="form-player">
-        <div class="player1">Jugador uno</div>
-
-        <label for="nombre">Nombre del Jugador:</label>
-        <input type="text" id="nombre1" name="nombre" required />
-        <label for="color">Color del Jugador:</label>
-        <input type="color" id="color1" name="color" required />
-      </div>
-
-      <div class="form-player">
-        <div class="player2">Jugador dos</div>
-
-        <label for="nombre">Nombre del Jugador:</label>
-        <input type="text" id="nombre2" name="nombre" required />
-        <label for="color">Color del Jugador:</label>
-        <input type="color" id="color2" name="color" required />
-      </div>
-    </div>
-
-    <fieldset>
+    <fieldset class="cantJuegos" onchange="reset()">
       <legend>Elige la cantidad de juegos:</legend>
 
       <div>
@@ -53,7 +33,33 @@
       </div>
     </fieldset>
 
-    <input type="submit" value="Iniciar Juego" onclick="onStart()" />
+    <div class="players">
+      <div class="jugador">
+        <div class="colorJugador">
+          <div class="color rojo"></div>
+          Jugador rojo
+        </div>
+
+        <span id="gana1"></span>
+      </div>
+
+      <div class="jugador">
+        <div class="colorJugador">
+          <div class="color azul"></div>
+          Jugador azul
+        </div>
+
+        <span id="gana2"></span>
+      </div>
+    </div>
+
+    <input
+      id="boton"
+      style="width: unset !important"
+      type="submit"
+      value="Iniciar Juego"
+      onclick="onClickButton()"
+    />
 
     <p id="ganadorTotal"></p>
   </body>

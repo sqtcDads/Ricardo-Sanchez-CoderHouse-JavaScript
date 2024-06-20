@@ -9,11 +9,44 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
-  max-width: 500px;
+  max-width: 1024px;
   padding: 20px;
 }
-.forms {
+.players {
   display: flex;
   flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.jugador {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cantJuegos {
+  display: flex;
+  gap: 15px;
+}
+
+.colorJugador {
+  display: flex;
   gap: 20px;
+  justify-content: baseline;
+}
+.color {
+  background-color: aliceblue;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+.azul {
+  background-color: rgb(10, 55, 255);
+}
+.rojo {
+  background-color: rgba(255, 0, 0, 0.521);
 }
