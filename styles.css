@@ -50,3 +50,7 @@ body {
 .rojo {
   background-color: rgba(255, 0, 0, 0.521);
 }
+
+.celdas {
+  background-color: red;
+}
