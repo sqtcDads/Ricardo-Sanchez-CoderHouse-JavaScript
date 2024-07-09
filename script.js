@@ -1,14 +1,13 @@
 const estadoInicial = {
     juegosJugados: 0,
-    cantidadJuegos: 0,
+    cantidadJuegos: 3,
     jugador1Gana: 0,
     jugador2Gana: 0,
-    minJuegos: 0,
+    minJuegos: 2,
     rows: 3,
     cols: 3,
     finalizado: false
 }
-
 
 
 let estadoJuego = {
@@ -20,40 +19,41 @@ function guardarEstado() {
 
 }
 
-
 window.onload = () => {
     const estadoGuardado = window.localStorage.getItem('estadoJuego')
+    const ganadorTotal = document.getElementById('ganadorTotal')
+    const boton = document.getElementById('boton')
 
     if (estadoGuardado != null) {
         estadoJuego = JSON.parse(estadoGuardado)
 
-        document.getElementById("gana1").innerHTML =
-            `Juegos ganados: ${estadoJuego.jugador1Gana}`;
+        if (estadoJuego.juegosJugados >= 1) {
 
-        document.getElementById("gana2").innerHTML =
-            `Juegos ganados: ${estadoJuego.jugador2Gana}`;
+            document.getElementById("gana1").innerHTML =
+                `Juegos ganados: ${estadoJuego.jugador1Gana}`;
+
+            document.getElementById("gana2").innerHTML =
+                `Juegos ganados: ${estadoJuego.jugador2Gana}`;
+        }
 
 
         document.querySelector(`input[id="${estadoJuego.cantidadJuegos}"]`).checked = 'checked';
-        const boton = document.getElementById('boton')
-        if (estadoJuego.juegosJugados == 0) boton.value = 'Iniciar juego'
-        else if (estadoJuego.finalizado == true) boton.value = 'Reiniciar juego'
-        else boton.value = 'Siguiente juego'
+        if (estadoJuego.juegosJugados == 0) {
+            boton.value = 'Iniciar juego'
+        }
+        else if (estadoJuego.finalizado == true) {
+            boton.value = 'Reiniciar juego'
 
-
-        const ganadorTotal = document.getElementById('ganadorTotal')
-        if (estadoJuego.finalizado == true) {
             if (estadoJuego.jugador1Gana > estadoJuego.jugador2Gana) {
                 ganadorTotal.innerHTML = 'Gano Rojo!';
             } else {
                 ganadorTotal.innerHTML = 'Gano Azul!';
             }
-
         }
+        else { boton.value = 'Siguiente juego' }
     }
 
 }
-
 
 function reset() {
     const boton = document.getElementById('boton')
@@ -64,7 +64,8 @@ function reset() {
     estadoJuego.cantidadJuegos = +document.querySelector('input[name="juegos"]:checked').value;
     estadoJuego.minJuegos = Math.ceil(estadoJuego.cantidadJuegos / 2);
     guardarEstado()
-    boton.value = 'iniciar juego'
+
+    boton.value = 'Iniciar juego'
     document.getElementById("gana1").innerHTML = '';
     document.getElementById("gana2").innerHTML = '';
     ganadorTotal.innerHTML = ''
@@ -72,9 +73,9 @@ function reset() {
 
 function onClickButton() {
 
-
     const boton = document.getElementById('boton')
     const ganadorTotal = document.getElementById('ganadorTotal')
+
 
 
     if (estadoJuego.finalizado) {
@@ -82,7 +83,7 @@ function onClickButton() {
     } else {
         jugar();
         if (estadoJuego.finalizado) {
-            boton.value = 'reiniciar juego'
+            boton.value = 'Reiniciar juego'
 
             if (estadoJuego.jugador1Gana > estadoJuego.jugador2Gana) {
                 ganadorTotal.innerHTML = 'Gano Rojo!';
@@ -97,7 +98,7 @@ function onClickButton() {
 
 function jugar() {
 
-    boton.value = 'siguiente juego'
+    boton.value = 'Siguiente juego'
     let ganador = simularJuego();
     if (ganador != 0) {
         estadoJuego.juegosJugados++
@@ -191,10 +192,6 @@ function hayGanador(tablero) {
         const ganadorLinea = revisarLinea(linea)
         if (ganadorLinea != 0)
             return ganadorLinea
-    }
-
-    if (tablero.every(row => row.every(cell => cell !== 0))) { //? usando arrow function 
-        return 3;
     }
 
     return 0
