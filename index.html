@@ -12,68 +12,76 @@
     <script src="./script.js"></script>
   </head>
   <body>
-    <h1>Proyecto para Coder de JS</h1>
+    <div class="supraMain">
+      <div class="main">
+        <h1>Proyecto para Coder de JS</h1>
 
-    <fieldset class="cantJuegos" onchange="reset()">
-      <legend>Elige la cantidad de juegos:</legend>
+        <fieldset class="cantJuegos" onchange="reset()">
+          <div>
+            <input type="radio" id="3" name="juegos" value="3" checked />
+            <label for="huey">Mejor de 3</label>
+          </div>
 
-      <div>
-        <input type="radio" id="3" name="juegos" value="3" checked />
-        <label for="huey">Mejor de 3</label>
-      </div>
+          <div>
+            <input type="radio" id="5" name="juegos" value="5" />
+            <label for="dewey">Mejor de 5</label>
+          </div>
 
-      <div>
-        <input type="radio" id="5" name="juegos" value="5" />
-        <label for="dewey">Mejor de 5</label>
-      </div>
+          <div>
+            <input type="radio" id="7" name="juegos" value="7" />
+            <label for="louie">Mejor de 7</label>
+          </div>
+        </fieldset>
 
-      <div>
-        <input type="radio" id="7" name="juegos" value="7" />
-        <label for="louie">Mejor de 7</label>
-      </div>
-    </fieldset>
+        <div class="players">
+          <div class="jugador">
+            <div class="colorJugador">
+              <div class="color rojo"></div>
+              Jugador rojo
+            </div>
 
-    <div class="players">
-      <div class="jugador">
-        <div class="colorJugador">
-          <div class="color rojo"></div>
-          Jugador rojo
+            <span id="gana1"></span>
+          </div>
+
+          <div class="jugador">
+            <div class="colorJugador">
+              <div class="color azul"></div>
+              Jugador azul
+            </div>
+
+            <span id="gana2"></span>
+          </div>
         </div>
 
-        <span id="gana1"></span>
-      </div>
+        <input
+          id="boton"
+          style="width: unset !important"
+          type="submit"
+          value="Iniciar Juego"
+          onclick="onClickButton()"
+        />
 
-      <div class="jugador">
-        <div class="colorJugador">
-          <div class="color azul"></div>
-          Jugador azul
+        <p id="ganadorTotal"></p>
+
+        <div class="tablero">
+          <div class="fila">
+            <div class="cells" id="cell-0-0"></div>
+            <div class="cells" id="cell-0-1"></div>
+            <div class="cells" id="cell-0-2"></div>
+          </div>
+          <div class="fila">
+            <div class="cells" id="cell-1-0"></div>
+            <div class="cells" id="cell-1-1"></div>
+            <div class="cells" id="cell-1-2"></div>
+          </div>
+          <div class="fila">
+            <div class="cells" id="cell-2-0"></div>
+            <div class="cells" id="cell-2-1"></div>
+            <div class="cells" id="cell-2-2"></div>
+          </div>
         </div>
-
-        <span id="gana2"></span>
       </div>
-    </div>
-
-    <input
-      id="boton"
-      style="width: unset !important"
-      type="submit"
-      value="Iniciar Juego"
-      onclick="onClickButton()"
-    />
-
-    <p id="ganadorTotal"></p>
-
-    <div class="celdas">
-      <div class="celda0"></div>
-      <div class="celda1"></div>
-      <div class="celda2"></div>
-      <div class="celda3"></div>
-      <div class="celda4"></div>
-      <div class="celda5"></div>
-      <div class="celda6"></div>
-      <div class="celda7"></div>
-      <div class="celda8"></div>
-      <div class="celda9"></div>
+      <div class="main" id="info"></div>
     </div>
   </body>
 </html>

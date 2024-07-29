@@ -1,3 +1,5 @@
+const linkWiki = "https://es.wikipedia.org/api/rest_v1/page/html/Tres_en_línea?stash=true"
+
 const estadoInicial = {
     juegosJugados: 0,
     cantidadJuegos: 3,
@@ -8,6 +10,9 @@ const estadoInicial = {
     cols: 3,
     finalizado: false
 }
+
+let turno = 'X';
+
 
 
 let estadoJuego = {
@@ -23,6 +28,8 @@ window.onload = () => {
     const estadoGuardado = window.localStorage.getItem('estadoJuego')
     const ganadorTotal = document.getElementById('ganadorTotal')
     const boton = document.getElementById('boton')
+
+    fetchInfo();
 
     if (estadoGuardado != null) {
         estadoJuego = JSON.parse(estadoGuardado)
@@ -53,6 +60,29 @@ window.onload = () => {
         else { boton.value = 'Siguiente juego' }
     }
 
+    document.querySelectorAll('.cells').forEach((cell, index) => {
+        cell.onclick = () => onClickCell(cell, index);
+    });
+
+}
+function onClickCell(cell, index) {
+    cell.innerHTML = turno
+
+    if (turno == 'X') {
+        turno = 'O'
+    } else {
+        turno = 'X'
+    }
+}
+
+
+
+function getRow(index, rows) {
+    return Math.floor(index / rows)
+}
+
+function getCol(index, cols) {
+    return index % cols
 }
 
 function reset() {
@@ -69,14 +99,14 @@ function reset() {
     document.getElementById("gana1").innerHTML = '';
     document.getElementById("gana2").innerHTML = '';
     ganadorTotal.innerHTML = ''
+
+
 }
 
 function onClickButton() {
 
     const boton = document.getElementById('boton')
     const ganadorTotal = document.getElementById('ganadorTotal')
-
-
 
     if (estadoJuego.finalizado) {
         reset();
@@ -90,9 +120,10 @@ function onClickButton() {
             } else {
                 ganadorTotal.innerHTML = 'Gano Azul!';
             }
-
         }
     }
+
+
     guardarEstado()
 }
 
@@ -110,17 +141,28 @@ function jugar() {
         estadoJuego.jugador2Gana++;
     }
 
+
+    document.querySelectorAll('.cells').forEach(cell => {
+        cell.textContent = '';
+    });
+
     document.getElementById("gana1").innerHTML =
         `Juegos ganados: ${estadoJuego.jugador1Gana}`;
 
     document.getElementById("gana2").innerHTML =
         `Juegos ganados: ${estadoJuego.jugador2Gana}`;
 
+
     if (estadoJuego.jugador1Gana === estadoJuego.minJuegos || estadoJuego.jugador2Gana === estadoJuego.minJuegos) {
         estadoJuego.finalizado = true;
     }
 
+    document.querySelectorAll('.cells').forEach(cell => {
+        cell.textContent = '';
+    });
+
 }
+
 
 function randomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -129,6 +171,13 @@ function randomNum(min, max) {
 function simularJuego() {
 
     let tablero = [];
+    let randomRow = randomNum(0, 2);
+    let randomCol = randomNum(0, 2);
+    let cells = document.querySelectorAll('.cells');
+    let turnodeJugador = 0;
+    let espaciosVacios = estadoInicial.rows * estadoInicial.cols;
+
+
 
 
     for (let i = 0; i < estadoInicial.rows; i++) {
@@ -138,34 +187,29 @@ function simularJuego() {
         }
     }
 
-    for (let i = 0; i < estadoInicial.rows * estadoInicial.cols; i++) {
-        let randomRow = randomNum(0, 2);
-        let randomCol = randomNum(0, 2);
+    while (espaciosVacios > 0) {
+        randomRow = Math.floor(Math.random() * estadoInicial.rows);
+        randomCol = Math.floor(Math.random() * estadoInicial.cols);
 
-        while (true) {
-            if (tablero[randomRow][randomCol] == 0) {
-                break;
+        if (tablero[randomRow][randomCol] == 0) {
+            tablero[randomRow][randomCol] = Math.floor(Math.random() * 2) + 1;
+            espaciosVacios--;
+
+
+            const ganador = hayGanador(tablero)
+
+            if (ganador != 0) {
+                return ganador;
+
             }
-            randomCol = randomNum(0, 2);
-            randomRow = randomNum(0, 2);
-
-
         }
-        tablero[randomRow][randomCol] = i % 2 ? 1 : 2;
 
-        const ganador = hayGanador(tablero)
-
-        console.log('ganador', ganador)
-        console.table(tablero)
-
-        if (ganador != 0) {
-            return ganador;
-        }
     }
+
     return 0
 }
 
-//! hasta aqui simular juego, tener en cuenta cuando hay empate 
+
 
 function hayGanador(tablero) {
 
@@ -207,5 +251,15 @@ function revisarLinea(linea) {
         return 2
     return 0
 
+}
+
+
+function fetchInfo() {
+    fetch(linkWiki)
+        .then(response => {
+            response.text().then(
+                text => { document.getElementById("info").innerHTML = text }
+            )
+        })
 }
 
